@@ -1,4 +1,4 @@
-import { authenticate } from "../../../utils/authMiddleware";
+import { authenticate } from "../../utils/authMiddleware";
 
 export default function handler(req, res) {
   const user = authenticate(req, res); // Validate token

@@ -18,7 +18,7 @@ const List = ({ ppts, onDelete, currentPage, totalPages, onPageChange, handleDow
           </tr>
         </thead>
         <tbody>
-          {ppts.map((ppt, index) => (
+          {ppts && ppts.map((ppt, index) => (
             <tr key={ppt._id}>
               <td>{(currentPage - 1) * 5 + index + 1}</td>
               <td>{ppt.type}</td>
