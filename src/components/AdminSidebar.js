@@ -104,20 +104,20 @@ const AdminSidebar = () => {
             </a>
           </Link>
         </li>
-        {/*<li
+        <li
           style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.2)" }}
         >
-          <Link href="/admin/contacts" legacyBehavior>
+          <Link href="/us/universities/list" legacyBehavior>
             <a
               className={`nav-link text-white px-3 py-2 d-flex align-items-center ${
                 isCollapsed ? "justify-content-center" : ""
               }`}
             >
               <i className="bi bi-envelope-fill me-2 text-info"></i>
-              {!isCollapsed && "Setting"}
+              {!isCollapsed && "Universities"}
             </a>
           </Link>
-        </li> */}
+        </li> 
       </ul>
 
       {/* Footer */}

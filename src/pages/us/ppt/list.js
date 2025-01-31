@@ -66,119 +66,216 @@ const PPTPage = () => {
     };
 
     // Function to generate and download PPT for a specific item
-  const handleDownloadPPT = (ppt) => {
-    const pptx = new PptxGenJS();
-  
-    // Add a slide for each question
-    ppt.questions.forEach((question, index) => {
-      const slide = pptx.addSlide();
-  
-      // Add the header
-      slide.addText(`${ppt.header.title}`, {
-        x: 0.5,
-        y: 0.3,
-        fontSize: 20,
-        bold: true,
-        color: "FFFFFF",
-        fill: { color: "e55039" },
-        align: "center",
-        w: "90%",
-        h: 0.6,
-      });
-      // add top line 
-      slide.addShape(pptx.ShapeType.rect, {
-        x: 0.5, 
-        y: 0.9, 
-        w: "90%", 
-        h: 0.08, 
-        fill: { color: "00b894" }, 
-      });
-       // add top line 
-    slide.addShape(pptx.ShapeType.rect, {
-        x: 0.5, 
-        y: 1, 
-        w: "90%", 
-        h: 0.01, 
-        fill: { color: "00b894" }, 
-    });
-      // Add the question
-      slide.addText(`Q.${index+1}: ${question.question}`, {
-        x: 1.5,
-        y: 1.28,
-        fontSize: 16,
-        bold: true,
-        color: "222222",
-        w: "80%",
-      });
-  
-      // Add the options
-      question.options.forEach((option, optionIndex) => {
-        slide.addText(
-          `${String.fromCharCode(65 + optionIndex)}. ${option}`, // A, B, C, D for options
-          {
-            x: 1.5,
-            y: 1.8 + optionIndex * 0.5, // Position each option below the previous one
-            fontSize: 14,
-            color: "1e3799", // Highlight correct answer in green
-            bold: optionIndex === question.correctOption, // Bold correct option
-            w: "90%",
-          }
-        );
-      });
-      // add top line 
-    slide.addShape(pptx.ShapeType.rect, {
-        x: 0.5, 
-        y: 4.2, 
-        w: "90%", 
-        h: 0.01, 
-        fill: { color: "00b894" }, 
-    });
-    // add top line 
-    slide.addShape(pptx.ShapeType.rect, {
-        x: 0.5, 
-        y: 4.3, 
-        w: "90%", 
-        h: 0.08, 
-        fill: { color: "00b894" }, 
-    });
-      // Add the footer
-      slide.addText(
-        "Railway, SSC, Teaching, DSSSB, and all competitive exams",
-        {
-          x: 0.5,
-          y: 4,
-          fontSize: 12,
-          bold: true,
-          color: "084594",
-          align: "center",
-          w: "90%",
+    const handleDownloadPPT = (ppt) => {
+        const pptx = new PptxGenJS();
+        if (ppt.type == 'type_one') {
+            ppt.textEntries.forEach((entries, index) => {
+                const slide = pptx.addSlide();
+
+                // Add the header
+                slide.addText(`${ppt.header.title}`, {
+                    x: 0.5,
+                    y: 0.3,
+                    fontSize: 20,
+                    bold: true,
+                    color: "FFFFFF",
+                    fill: { color: "e55039" },
+                    align: "center",
+                    w: "90%",
+                    h: 0.6,
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 0.9,
+                    w: "90%",
+                    h: 0.08,
+                    fill: { color: "00b894" },
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 1,
+                    w: "90%",
+                    h: 0.01,
+                    fill: { color: "00b894" },
+                });
+
+                // Add the options
+                // entries.forEach((option, optionIndex) => {
+                //     slide.addText(
+                //         `${String.fromCharCode(65 + optionIndex)}. ${option.title}`, // A, B, C, D for options
+                //         {
+                //             x: 1.5,
+                //             y: 1.8 + optionIndex * 0.5, // Position each option below the previous one
+                //             fontSize: 14,
+                //             color: "1e3799", // Highlight correct answer in green
+                //             bold: optionIndex === question.correctOption, // Bold correct option
+                //             w: "90%",
+                //         }
+                //     );
+                // });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 4.2,
+                    w: "90%",
+                    h: 0.01,
+                    fill: { color: "00b894" },
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 4.3,
+                    w: "90%",
+                    h: 0.08,
+                    fill: { color: "00b894" },
+                });
+                // Add the footer
+                slide.addText(
+                    "Railway, SSC, Teaching, DSSSB, and all competitive exams",
+                    {
+                        x: 0.5,
+                        y: 4,
+                        fontSize: 12,
+                        bold: true,
+                        color: "084594",
+                        align: "center",
+                        w: "90%",
+                    }
+                );
+
+                // Add branding
+                slide.addText("Edustream India", {
+                    x: 0.2,
+                    y: 4.9,
+                    fontSize: 28,
+                    bold: true,
+                    color: "FF5722",
+                    align: "center",
+                    w: "90%",
+                });
+
+                // Add logo (optional)
+                slide.addImage({
+                    path: "https://res.cloudinary.com/did4hiibf/image/upload/v1737287441/uploads/qxp9jqrbceasydqlqzbc.jpg", // Replace with your logo URL
+                    x: 2.5,
+                    y: 4.5,
+                    w: 0.8,
+                    h: 0.8,
+                });
+            });
+        } else {
+            // Add a slide for each question
+            ppt.questions.forEach((question, index) => {
+                const slide = pptx.addSlide();
+
+                // Add the header
+                slide.addText(`${ppt.header.title}`, {
+                    x: 0.5,
+                    y: 0.3,
+                    fontSize: 20,
+                    bold: true,
+                    color: "FFFFFF",
+                    fill: { color: "e55039" },
+                    align: "center",
+                    w: "90%",
+                    h: 0.6,
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 0.9,
+                    w: "90%",
+                    h: 0.08,
+                    fill: { color: "00b894" },
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 1,
+                    w: "90%",
+                    h: 0.01,
+                    fill: { color: "00b894" },
+                });
+                // Add the question
+                slide.addText(`Q.${index + 1}: ${question.question}`, {
+                    x: 1.5,
+                    y: 1.28,
+                    fontSize: 16,
+                    bold: true,
+                    color: "222222",
+                    w: "80%",
+                });
+
+                // Add the options
+                question.options.forEach((option, optionIndex) => {
+                    slide.addText(
+                        `${String.fromCharCode(65 + optionIndex)}. ${option}`, // A, B, C, D for options
+                        {
+                            x: 1.5,
+                            y: 1.8 + optionIndex * 0.5, // Position each option below the previous one
+                            fontSize: 14,
+                            color: "1e3799", // Highlight correct answer in green
+                            bold: optionIndex === question.correctOption, // Bold correct option
+                            w: "90%",
+                        }
+                    );
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 4.2,
+                    w: "90%",
+                    h: 0.01,
+                    fill: { color: "00b894" },
+                });
+                // add top line 
+                slide.addShape(pptx.ShapeType.rect, {
+                    x: 0.5,
+                    y: 4.3,
+                    w: "90%",
+                    h: 0.08,
+                    fill: { color: "00b894" },
+                });
+                // Add the footer
+                slide.addText(
+                    "Railway, SSC, Teaching, DSSSB, and all competitive exams",
+                    {
+                        x: 0.5,
+                        y: 4,
+                        fontSize: 12,
+                        bold: true,
+                        color: "084594",
+                        align: "center",
+                        w: "90%",
+                    }
+                );
+
+                // Add branding
+                slide.addText("Edustream India", {
+                    x: 0.2,
+                    y: 4.9,
+                    fontSize: 28,
+                    bold: true,
+                    color: "FF5722",
+                    align: "center",
+                    w: "90%",
+                });
+
+                // Add logo (optional)
+                slide.addImage({
+                    path: "https://res.cloudinary.com/did4hiibf/image/upload/v1737287441/uploads/qxp9jqrbceasydqlqzbc.jpg", // Replace with your logo URL
+                    x: 2.5,
+                    y: 4.5,
+                    w: 0.8,
+                    h: 0.8,
+                });
+            });
         }
-      );
-  
-      // Add branding
-      slide.addText("Edustream India", {
-        x: 0.2,
-        y: 4.9,
-        fontSize: 28,
-        bold: true,
-        color: "FF5722",
-        align: "center",
-        w: "90%",
-      });
-  
-      // Add logo (optional)
-      slide.addImage({
-        path: "https://res.cloudinary.com/did4hiibf/image/upload/v1737287441/uploads/qxp9jqrbceasydqlqzbc.jpg", // Replace with your logo URL
-        x: 2.5,
-        y: 4.5,
-        w: 0.8,
-        h: 0.8,
-      });
-    });
-  
-    // Export the PowerPoint
-    pptx.writeFile(`${ppt.header.title.replace(/\s+/g, "_")}_PPT`);
-  };
+        // Export the PowerPoint
+        pptx.writeFile(`${ppt.header.title.replace(/\s+/g, "_")}_PPT`);
+    };
     return (
         <div className="d-flex">
             <AdminSidebar />
@@ -201,7 +298,12 @@ const PPTPage = () => {
                             <div className='col-md-6'>
                                 <Link href={"/us/ppt/"}>
                                     <Button variant="dark" className="mb-3">
-                                        Add/Update File
+                                        Add Quiz
+                                    </Button>
+                                </Link>&nbsp;
+                                <Link href={"/us/ppt/slide"}>
+                                    <Button variant="primary" className="mb-3">
+                                        Add Slide
                                     </Button>
                                 </Link>
                             </div>

@@ -44,7 +44,11 @@ const List = ({ ppts, onDelete, currentPage, totalPages, onPageChange, handleDow
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={() => router.push(`/us/ppt/edit?id=${ppt._id}`)}
+                  onClick={() =>{ if(ppt.type == 'type_one'){
+                    router.push(`/us/ppt/editSlide?id=${ppt._id}`)
+                  }else{
+                    router.push(`/us/ppt/edit?id=${ppt._id}`)
+                  }  }}
                 >
                   Edit
                 </Button> &nbsp;

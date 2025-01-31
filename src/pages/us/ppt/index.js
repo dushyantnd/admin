@@ -71,7 +71,7 @@ const PPTPage = () => {
                     <div className="card-header bg-primary text-white">
                         <h4 className="mb-0">Dynamic PPT Generator</h4>
                     </div>
-                    <Form className="p-4" onSubmit={handleSubmit}>
+                    <Form className="p-4 row" onSubmit={handleSubmit}>
                         <Form.Group>
                             <Form.Label>PPT Type</Form.Label>
                             <Form.Select
@@ -82,7 +82,7 @@ const PPTPage = () => {
                                 <option value="type_two">Type Two</option>
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group>
+                        <Form.Group className='col-md-6'>
                             <Form.Label>Header Title</Form.Label>
                             <Form.Control
                                 type="text"
@@ -91,17 +91,7 @@ const PPTPage = () => {
                                 placeholder='Header Title'
                             />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Header Logo URL</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={headerLogo}
-                                onChange={(e) => setHeaderLogo(e.target.value)}
-                                 placeholder='Header Logo URL'
-                            />
-                        </Form.Group>
-
-                        <Form.Group>
+                        <Form.Group className='col-md-6'>
                             <Form.Label>Footer Text</Form.Label>
                             <Form.Control
                                 type="text"
@@ -110,63 +100,154 @@ const PPTPage = () => {
                                 placeholder='Footer Text'
                             />
                         </Form.Group>
-                        <Form.Group>
+                        <Form.Group className='col-md-6'>
+                            <Form.Label>Header Logo URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={headerLogo}
+                                onChange={(e) => setHeaderLogo(e.target.value)}
+                                placeholder='Header Logo URL'
+                            />
+                        </Form.Group>
+                        <Form.Group className='col-md-6'>
                             <Form.Label>Footer Logo URL</Form.Label>
                             <Form.Control
                                 type="text"
                                 value={footerLogo}
                                 onChange={(e) => setFooterLogo(e.target.value)}
-                               placeholder='Footer Logo URL'
+                                placeholder='Footer Logo URL'
                             />
                         </Form.Group>
 
                         {pptType === 'type_one' && (
                             <>
-                                <h4>Text Entries</h4>
-                                {textEntries.map((entry, index) => (
-                                    <div key={index} className="mb-2">
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Title"
-                                            value={entry.title}
-                                            onChange={(e) =>
+                                <h4>Slides</h4>
+                                {textEntries.map((slide, slideIndex) => (
+                                    <div key={slideIndex} className="mb-4 border rounded p-3">
+                                        <h5>Slide {slideIndex + 1}</h5>
+                                        {slide.entries.map((entry, entryIndex) => (
+                                            <div key={entryIndex} className="mb-3 row">
+                                                <Form.Group className="col-md-4">
+                                                    <Form.Label>Title</Form.Label>
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder={`Title for Slide ${slideIndex + 1}`}
+                                                        value={entry.title}
+                                                        onChange={(e) =>
+                                                            setTextEntries(
+                                                                textEntries.map((s, i) =>
+                                                                    i === slideIndex
+                                                                        ? {
+                                                                            ...s,
+                                                                            entries: s.entries.map((e, j) =>
+                                                                                j === entryIndex
+                                                                                    ? { ...e, title: e.target.value }
+                                                                                    : e
+                                                                            ),
+                                                                        }
+                                                                        : s
+                                                                )
+                                                            )
+                                                        }
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group className="col-md-4">
+                                                    <Form.Label>Description</Form.Label>
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder={`Description for Slide ${slideIndex + 1}`}
+                                                        value={entry.description}
+                                                        onChange={(e) =>
+                                                            setTextEntries(
+                                                                textEntries.map((s, i) =>
+                                                                    i === slideIndex
+                                                                        ? {
+                                                                            ...s,
+                                                                            entries: s.entries.map((e, j) =>
+                                                                                j === entryIndex
+                                                                                    ? { ...e, description: e.target.value }
+                                                                                    : e
+                                                                            ),
+                                                                        }
+                                                                        : s
+                                                                )
+                                                            )
+                                                        }
+                                                    />
+                                                </Form.Group>
+                                                <div className="col-md-2 d-flex align-items-end">
+                                                    <Button
+                                                        variant="danger"
+                                                        onClick={() =>
+                                                            setTextEntries(
+                                                                textEntries.map((s, i) =>
+                                                                    i === slideIndex
+                                                                        ? {
+                                                                            ...s,
+                                                                            entries: s.entries.filter((_, j) => j !== entryIndex),
+                                                                        }
+                                                                        : s
+                                                                )
+                                                            )
+                                                        }
+                                                    >
+                                                        Remove Entry
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                        <Button
+                                            variant="secondary"
+                                            size="sm"
+                                            className="mb-3"
+                                            onClick={() =>
                                                 setTextEntries(
-                                                    textEntries.map((item, i) =>
-                                                        i === index ? { ...item, title: e.target.value } : item
+                                                    textEntries.map((s, i) =>
+                                                        i === slideIndex
+                                                            ? { ...s, entries: [...s.entries, { title: '', description: '' }] }
+                                                            : s
                                                     )
                                                 )
                                             }
-                                        />
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Description"
-                                            value={entry.description}
-                                            onChange={(e) =>
-                                                setTextEntries(
-                                                    textEntries.map((item, i) =>
-                                                        i === index
-                                                            ? { ...item, description: e.target.value }
-                                                            : item
-                                                    )
-                                                )
-                                            }
-                                            className="mt-1"
-                                        />
+                                        >
+                                            Add Text Entry
+                                        </Button>
+                                        <div className="text-end">
+                                            <Button
+                                                variant="danger"
+                                                size="sm"
+                                                onClick={() => setTextEntries(textEntries.filter((_, i) => i !== slideIndex))}
+                                            >
+                                                Remove Slide
+                                            </Button>
+                                        </div>
                                     </div>
                                 ))}
-                                <Button variant="secondary" onClick={handleAddTextEntry}>
-                                    Add Text Entry
+
+                                <Button
+                                    variant="primary"
+                                    className="mt-3"
+                                    onClick={() =>
+                                        setTextEntries([...textEntries, { entries: [{ title: '', description: '' }] }])
+                                    }
+                                >
+                                    Add Slide
                                 </Button>
-                                <Form.Group>
+                                <Form.Group className="mt-3">
                                     <Form.Label>Hint Line</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        placeholder="Enter hint line"
                                         value={hintLine}
                                         onChange={(e) => setHintLine(e.target.value)}
                                     />
                                 </Form.Group>
                             </>
                         )}
+
+
+
 
                         {pptType === 'type_two' && (
                             <>
@@ -274,7 +355,7 @@ const PPTPage = () => {
                         </Button>
                     </Form>
 
-                    
+
                 </div>
             </div>
         </div>

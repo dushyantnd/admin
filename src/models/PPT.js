@@ -16,8 +16,12 @@ const pptSchema = new mongoose.Schema({
   // Fields specific to type_one
   textEntries: [
     {
-      title: { type: String }, // Text key (e.g., भारत के विदेश मंत्री)
-      description: { type: String }, // Corresponding value (e.g., डॉ. सुब्रह्मण्यम जयशंकर)
+      entries: [
+        {
+          title: { type: String, required: true }, // Text entry title
+          description: { type: String, required: true }, // Corresponding description
+        },
+      ],
     },
   ],
   hintLine: { type: String }, // Optional hint or suggestion line
